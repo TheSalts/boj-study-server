@@ -1,13 +1,17 @@
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
-const fs = require("fs");
 const baseURL = "https://solved.ac/api/v3";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.get("/api/users", async (req, res) => {
