@@ -11,7 +11,9 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 
 app.get("/api/users", async (req, res) => {
-  let userJson = JSON.parse(fs.readFileSync("userinfo.json"));
+  let userJson = await axios.get(
+    "https://raw.githubusercontent.com/TheSalts/boj-study-server/refs/heads/main/userinfo.json"
+  );
   let users = [];
   for (let username of userJson) {
     let options = {
@@ -33,7 +35,9 @@ app.get("/api/users", async (req, res) => {
 app.get("/api/users/solved", async (req, res) => {
   let problems = { solved: [], unsolved: [] };
   let username = req.query.username;
-  let studyProblems = JSON.parse(fs.readFileSync("problems.json"));
+  let studyProblems = await axios.get(
+    "https://raw.githubusercontent.com/TheSalts/boj-study-server/refs/heads/main/problems.json"
+  );
   let i = 1;
   while (true) {
     let options = {
