@@ -15,10 +15,10 @@ app.use(
 app.use(express.json());
 
 app.get("/api/users", async (req, res) => {
-  let userJsonStr = await axios.get(
+  let userJsonRaw = await axios.get(
     "https://raw.githubusercontent.com/TheSalts/boj-study-server/refs/heads/main/userinfo.json"
   );
-  let userJson = JSON.parse(userJsonStr);
+  let userJson = userJsonRaw.data;
   let users = [];
   for (let username of userJson) {
     let options = {
@@ -40,10 +40,10 @@ app.get("/api/users", async (req, res) => {
 app.get("/api/users/solved", async (req, res) => {
   let problems = { solved: [], unsolved: [] };
   let username = req.query.username;
-  let studyProblemsStr = await axios.get(
+  let studyProblemsRaw = await axios.get(
     "https://raw.githubusercontent.com/TheSalts/boj-study-server/refs/heads/main/problems.json"
   );
-  let studyProblems = JSON.parse(studyProblemsStr);
+  let studyProblems = studyProblemsRaw.data;
   let i = 1;
   while (true) {
     let options = {
